@@ -1,5 +1,3 @@
-import React from 'react'
-
 export function Header() {
   return (
     <header className="sticky top-0 z-10 w-full border-b border-slate-200 bg-white/80 backdrop-blur">

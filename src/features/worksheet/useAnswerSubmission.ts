@@ -43,7 +43,7 @@ export function useAnswerSubmission({
         const result = r.data.correct ? 'correct' : 'wrong'
         setAnswers(prev => ({ ...prev, [taskId]: { selectedOptionId: optionId, result } }))
       } catch {
-        setAnswers(prev => ({ ...prev, [taskId]: { selectedOptionId: optionId, result: 'wrong' } }))
+        setAnswers(prev => ({ ...prev, [taskId]: { selectedOptionId: optionId, result: 'error' } }))
       }
     },
     [token, authStatus, setAnswers, nudgeSession]

@@ -1,8 +1,6 @@
-import React from 'react'
-
 type Props = {
   text: string
-  state: 'idle' | 'selected' | 'correct' | 'wrong'
+  state: 'idle' | 'selected' | 'correct' | 'wrong' | 'error'
   onClick: () => void
 }
 
@@ -13,15 +11,20 @@ export function OptionButton({ text, state, onClick }: Props) {
   const correct = 'border-primary bg-primary/10'
   const wrong = 'border-red-300 bg-red-50'
 
-  const cls =
-    state === 'selected' ? `${base} ${selected}` :
-    state === 'correct' ? `${base} ${correct}` :
-    state === 'wrong' ? `${base} ${wrong}` :
-    `${base} ${idle}`
+  const stateMap: Record<Props['state'], string> = {
+    idle,
+    selected,
+    correct,
+    wrong,
+    error: wrong
+  }
+
+  const cls = `${base} ${stateMap[state]}`
 
   const marker =
     state === 'correct' ? '✓' :
     state === 'wrong' ? '✕' :
+    state === 'error' ? '⚠' :
     ''
 
   return (

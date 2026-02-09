@@ -1,10 +1,9 @@
-import React from 'react'
 import { WorksheetTask } from '../api/types'
 import { OptionButton } from './OptionButton'
 
 export type TaskAnswerState = {
   selectedOptionId?: number
-  result?: 'correct' | 'wrong'
+  result?: 'correct' | 'wrong' | 'error'
 }
 
 type Props = {
@@ -28,9 +27,8 @@ export function TaskCard({ task, answerState, onSelect }: Props) {
         {task.options.map(opt => {
           const selected = answerState?.selectedOptionId === opt.id
           const state =
-            answerState?.result === 'correct' && selected ? 'correct' :
-            answerState?.result === 'wrong' && selected ? 'wrong' :
-            selected ? 'selected' :
+            selected ? 
+            answerState?.result && ['correct', 'wrong', 'error'].includes(answerState?.result || '') ? answerState?.result : 'selected' :
             'idle'
 
           return (
@@ -48,8 +46,10 @@ export function TaskCard({ task, answerState, onSelect }: Props) {
         <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
           {answerState.result === 'correct' ? (
             <span className="font-semibold text-primary">Correct</span>
-          ) : (
+          ) : answerState.result === 'wrong' ? (
             <span className="font-semibold text-red-600">Wrong</span>
+          ) : (
+            <span className="font-semibold text-red-600">Oops, there was an error. Please contact support.</span>
           )}
         </div>
       ) : null}
