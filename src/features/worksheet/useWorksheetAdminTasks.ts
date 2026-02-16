@@ -9,7 +9,7 @@ type Return = {
   status: LoadStatus
 }
 
-export function useWorksheetTasks(): Return {
+export function useWorksheetAdminTasks(): Return {
   const [tasks, setTasks] = React.useState<WorksheetTask[]>([])
   const [status, setStatus] = React.useState<LoadStatus>('idle')
 
@@ -19,7 +19,7 @@ export function useWorksheetTasks(): Return {
     const run = async () => {
       if (!cancelled) setStatus('loading')
       try {
-        const t = await api.get<WorksheetTask[]>('/worksheet/tasks')
+        const t = await api.get<WorksheetTask[]>('/admin/tasks')
         if (!cancelled) {
           setTasks(t.data)
           setStatus('idle')

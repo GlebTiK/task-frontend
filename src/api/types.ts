@@ -1,6 +1,7 @@
 export type TaskOption = {
   id: number
-  text: string
+  text: string,
+  isCorrect?: boolean
 }
 
 export type WorksheetTask = {

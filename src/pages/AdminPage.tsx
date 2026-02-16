@@ -1,17 +1,16 @@
 import React from 'react'
-import { TaskCard } from '../components/TaskCard'
+import { TaskAdminCard } from '../components/TaskAdminCard'
 import { SessionPanel, SessionPanelHandle } from '../features/session/SessionPanel'
 import { useSession } from '../features/session/useSession'
 import { useWorksheetAdminTasks } from '../features/worksheet/useWorksheetAdminTasks'
-import { useWorksheetAnswers } from '../features/worksheet/useWorksheetAnswers'
 import { useAnswerSubmission } from '../features/worksheet/useAnswerSubmission'
 
 export function WorksheetPage() {
   const session = useSession()
   const sessionPanelRef = React.useRef<SessionPanelHandle | null>(null)
 
-  const { tasks, status } = useWorksheetAdminTasks()
-  const { answers, setAnswers } = useWorksheetAnswers(session.token, session.authStatus)
+  const { tasks, status } = useWorksheetTasks()
+  const { answers, setAnswers } = useWorksheetAdminAnswers(session.token, session.authStatus)
 
   const nudgeSession = React.useCallback(
     (message: string) => {
@@ -30,6 +29,8 @@ export function WorksheetPage() {
     setAnswers,
     nudgeSession
   })
+
+  const onEdit = (taskId: number, optionId: number, newText: string, isCorrect: boolean) => {};
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-8">
@@ -52,7 +53,7 @@ export function WorksheetPage() {
       ) : (
         <div className="grid grid-cols-1 gap-5">
           {tasks.map(t => (
-            <TaskCard key={t.id} task={t} answerState={answers[t.id]} onSelect={onSelect} />
+            <TaskAdminCard key={t.id} task={t} correctState={answers[t.id]} onSelect={onSelect} onEdit={onEdit} />
           ))}
         </div>
       )}
